@@ -1,4 +1,4 @@
-package single;
+package cluster.handler;
 
 import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelDuplexHandler;
@@ -53,6 +53,7 @@ public class RedisClientHandler extends ChannelDuplexHandler {
 
 
     private static void printRedisResponse(RedisMessage msg) {
+        System.out.println(msg);
         if (msg instanceof SimpleStringRedisMessage) {
             // 以 + 开头的单行字符串
             System.out.println(((SimpleStringRedisMessage) msg).content());

@@ -1,4 +1,4 @@
-package single;
+package cluster.handler;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
