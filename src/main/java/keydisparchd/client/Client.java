@@ -19,7 +19,7 @@ public class Client {
         this.port = port;
     }
 
-    public void start( Server server) {
+    public void start(Server server) {
 
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();

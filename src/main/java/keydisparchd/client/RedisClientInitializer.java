@@ -15,8 +15,6 @@ public class RedisClientInitializer extends ChannelInitializer<Channel> {
 
     @Override
     protected void initChannel(Channel ch) throws Exception {
-
         ch.pipeline().addLast(new RedisClientHandler(server));
-
     }
 }

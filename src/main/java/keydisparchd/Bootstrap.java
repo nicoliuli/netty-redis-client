@@ -10,7 +10,7 @@ public class Bootstrap {
         server.start();
 
         // 启动client，连接netty-server，和redis-cli
-        Client client = new Client(6381);
+        Client client = new Client(6380);
         client.start(server);
     }
 }

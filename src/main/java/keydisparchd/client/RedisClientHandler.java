@@ -36,8 +36,19 @@ public class RedisClientHandler extends ChannelDuplexHandler {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        System.err.print("exceptionCaught: ");
-        cause.printStackTrace(System.err);
+        // 这里如果是jedis关闭连接后，会抛异常
+        // System.err.print("exceptionCaught: ");
+        // cause.printStackTrace(System.err);
         ctx.close();
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("connection client active:" + ctx.channel().id());
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("connention client inactive:" + ctx.channel().id());
     }
 }
