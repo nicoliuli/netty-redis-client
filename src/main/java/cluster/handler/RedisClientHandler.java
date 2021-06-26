@@ -15,6 +15,7 @@ import java.util.List;
 
 public class RedisClientHandler extends ChannelDuplexHandler {
     // 发送 redis 命令
+    // 将字符串编码成RedisMessage
     @Override
     public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) {
         String aMsg = (String) msg;
@@ -22,6 +23,7 @@ public class RedisClientHandler extends ChannelDuplexHandler {
         if (StringUtil.isNullOrEmpty(aMsg)) {
             return;
         }
+        System.out.println(aMsg);
         String[] commands = aMsg.split("\\s+");
         List<RedisMessage> children = new ArrayList<>(commands.length);
         for (String cmdString : commands) {
@@ -36,6 +38,7 @@ public class RedisClientHandler extends ChannelDuplexHandler {
     // 接收 redis 响应数据
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        System.out.println(msg);
         RedisMessage redisMessage = (RedisMessage) msg;
         // 打印响应消息
         printRedisResponse(redisMessage);

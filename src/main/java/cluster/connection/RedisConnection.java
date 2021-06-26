@@ -54,9 +54,9 @@ public class RedisConnection {
                         }
                     }
                 });
-            }
+            }*/
 
-            for (int i = 0; i < 2; i++) {
+            /*for (int i = 0; i < 2; i++) {
                 channel.writeAndFlush("get b");
             }*/
             /*channel.close().sync().addListener(new GenericFutureListener<Future<? super Void>>() {
@@ -70,22 +70,12 @@ public class RedisConnection {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        // -Dport=6379 -Dhost=127.0.0.1
-        String host = System.getProperty("host");
-        Integer port = Integer.parseInt(System.getProperty("port"));
-        RedisConnection connection = new RedisConnection(host, port);
-        connection.start();
-
-        RedisConnection connection1 = new RedisConnection(host, port);
-        connection1.start();
-
-        RedisConnection connection2 = new RedisConnection(host, port);
-        connection2.start();
-
-    }
 
     private void print(String str) {
         System.out.println(str);
+    }
+
+    public Channel channel(){
+        return this.channel;
     }
 }
