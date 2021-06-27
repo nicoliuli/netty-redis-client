@@ -12,6 +12,7 @@ import io.netty.util.concurrent.GenericFutureListener;
 public class Server {
     private String host;
     private int port;
+    // TODO: 2021/6/27 改成Channel[] 池化技术，一个server启动多个连接， 多个连接连同一个redis，从池里获取channel
     private Channel channel;
 
 
@@ -21,6 +22,7 @@ public class Server {
     }
 
     public void start() throws Exception {
+
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             Bootstrap bootstrap = new Bootstrap();
@@ -39,6 +41,8 @@ public class Server {
         } finally {
 
         }
+
+
     }
 
     public Channel channel() {
