@@ -16,12 +16,14 @@ import java.util.List;
 public class Client {
     private int port;
     private Channel channel;
+    private List<Server> serverList;
 
-    public Client(int port) {
+    public Client(int port, List<Server> serverList) {
         this.port = port;
+        this.serverList = serverList;
     }
 
-    public void start(List<Server> serverList) {
+    public void start() {
 
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();

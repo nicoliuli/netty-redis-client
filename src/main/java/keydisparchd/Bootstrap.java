@@ -20,7 +20,7 @@ public class Bootstrap {
         }
 
         // 启动client，连接netty-server，和redis-cli
-        Client client = new Client(ConfigUtil.config.getClientPort());
-        client.start(serverList);
+        Client client = new Client(ConfigUtil.config.getClientPort(),serverList);
+        client.start();
     }
 }

@@ -39,15 +39,12 @@ public class RedisClientHandler extends ChannelDuplexHandler {
         int serverCount = serverList.size();
         Server server = null;
         int serverIdx = 0;
+
         // 解析命令，算出key等信息
         CmdAndKey cmdAndKey = resolveStringCmd(stringCmd);
         System.out.println("cmdAndKey = " + cmdAndKey);
-        if (cmdAndKey == null) {
-            // 随机发送
-            serverIdx = new Random().nextInt(serverCount);
-            server = serverList.get(serverIdx);
-        } else if (CmdSet.isOtherCmd(cmdAndKey.getCmd())) {
-            String key = cmdAndKey.getKey();
+
+        if (cmdAndKey == null || CmdSet.isOtherCmd(cmdAndKey.getCmd())) {
             // 随机发送
             serverIdx = new Random().nextInt(serverCount);
             server = serverList.get(serverIdx);
@@ -67,7 +64,7 @@ public class RedisClientHandler extends ChannelDuplexHandler {
 
     /*
        规则：目的是为了解析出key
-       如果key是monnitor、info、keys等命令，则随机挑选出一个server发送
+       如果key是monitor、info、keys等命令，则随机挑选出一个server发送
        如果是一般的key，则根据hash选择server发送
      */
     private CmdAndKey resolveStringCmd(String stringCmd) {
@@ -86,6 +83,7 @@ public class RedisClientHandler extends ChannelDuplexHandler {
             return new CmdAndKey(Constants.KEYS, null);
         }
 
+        // 一般的key
         int index = 0;
         for (String cmd : cmdArr) {
             if (cmd.startsWith(Constants.$)) {
@@ -95,7 +93,6 @@ public class RedisClientHandler extends ChannelDuplexHandler {
         }
 
         return null;
-
     }
 
 

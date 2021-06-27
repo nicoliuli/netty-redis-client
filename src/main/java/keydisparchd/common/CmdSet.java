@@ -3,6 +3,9 @@ package keydisparchd.common;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * 允许输入的命令，持续更新中
+ */
 public class CmdSet {
     /**
      * 普通的命令，如get set hgetall
