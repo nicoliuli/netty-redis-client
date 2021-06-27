@@ -11,6 +11,8 @@ import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import keydisparchd.server.Server;
 
+import java.util.List;
+
 public class Client {
     private int port;
     private Channel channel;
@@ -19,7 +21,7 @@ public class Client {
         this.port = port;
     }
 
-    public void start(Server server) {
+    public void start(List<Server> serverList) {
 
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -28,7 +30,7 @@ public class Client {
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG, 1024)
-                    .childHandler(new RedisClientInitializer(server));
+                    .childHandler(new RedisClientInitializer(serverList));
 
             ChannelFuture f = b.bind(port).sync().addListener(new GenericFutureListener<Future<? super Void>>() {
                 @Override
