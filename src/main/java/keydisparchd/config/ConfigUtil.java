@@ -1,6 +1,7 @@
 package keydisparchd.config;
 
 
+import io.netty.util.internal.StringUtil;
 import keydisparchd.model.RedisServerConfig;
 
 import java.io.IOException;
@@ -22,12 +23,20 @@ public class ConfigUtil {
             }
 
             config.setClientPort(Integer.parseInt(propMap.get("clientPort")));
+
+            String serverChannel = propMap.get("serverChannel");
+            if (StringUtil.isNullOrEmpty(serverChannel)) {
+                config.setServerChannel(1);
+            } else {
+                config.setServerChannel(Integer.parseInt(serverChannel));
+            }
+
             String redisServerList = propMap.get("redisServerList");
             String[] redisServer = redisServerList.split(",");
             List<RedisServerConfig> list = new ArrayList<>();
             for (String ipPort : redisServer) {
                 String[] split = ipPort.split(":");
-                RedisServerConfig redisServerConfig = new RedisServerConfig(split[0],Integer.parseInt(split[1]));
+                RedisServerConfig redisServerConfig = new RedisServerConfig(split[0], Integer.parseInt(split[1]));
                 list.add(redisServerConfig);
             }
             config.setRedisServerConfigList(list);

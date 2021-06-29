@@ -16,13 +16,15 @@ public class Config {
      */
     private List<RedisServerConfig> redisServerConfigList = new ArrayList<>();
 
+    /**
+     * 每个redis的连接数
+     */
+    private Integer serverChannel;
+
     public Config() {
     }
 
-    public Config(Integer clientPort, List<RedisServerConfig> redisServerConfigList) {
-        this.clientPort = clientPort;
-        this.redisServerConfigList = redisServerConfigList;
-    }
+
 
     public Integer getClientPort() {
         return clientPort;
@@ -38,5 +40,13 @@ public class Config {
 
     public void setRedisServerConfigList(List<RedisServerConfig> redisServerConfigList) {
         this.redisServerConfigList = redisServerConfigList;
+    }
+
+    public Integer getServerChannel() {
+        return serverChannel;
+    }
+
+    public void setServerChannel(Integer serverChannel) {
+        this.serverChannel = serverChannel;
     }
 }

@@ -1,6 +1,7 @@
 package keydisparchd.client;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
@@ -58,8 +59,9 @@ public class RedisClientHandler extends ChannelDuplexHandler {
         System.out.println("serverIdx = " + serverIdx);
 
         // 发给server,把client的channel通过attr属性带过去
-        server.channel().attr(Constants.attributeKey).set(ctx.channel());
-        server.channel().writeAndFlush(msg);
+        Channel channel = server.getRandomChannel();
+        channel.attr(Constants.attributeKey).set(ctx.channel());
+        channel.writeAndFlush(msg);
     }
 
     /*

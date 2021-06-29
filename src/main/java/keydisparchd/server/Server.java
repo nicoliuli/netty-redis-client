@@ -8,12 +8,16 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import keydisparchd.config.ConfigUtil;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Server {
     private String host;
     private int port;
-    // TODO: 2021/6/27 改成Channel[] 池化技术，一个server启动多个连接， 多个连接连同一个redis，从池里获取channel
     private Channel channel;
+    private ArrayList<Channel> serverChannel = new ArrayList<>(ConfigUtil.config.getServerChannel());
 
 
     public Server(String host, int port) {
@@ -37,16 +41,24 @@ public class Server {
                 }
             });
             channel = f.channel();
+            serverChannel.add(channel);
 
         } finally {
 
         }
-
-
     }
 
     public Channel channel() {
         return channel;
+    }
+
+    public Channel getRandomChannel() {
+        if (ConfigUtil.config.getServerChannel() == 1) {
+            return serverChannel.get(0);
+        }
+        int idx = new Random().nextInt(ConfigUtil.config.getServerChannel());
+        System.out.println("server channel idx = " + idx);
+        return serverChannel.get(idx);
     }
 
 

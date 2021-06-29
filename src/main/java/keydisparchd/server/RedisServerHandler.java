@@ -24,8 +24,8 @@ public class RedisServerHandler extends ChannelDuplexHandler {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         // 获取client的channel，把数据写回给redis-cli
-        Channel cliantChannel = ctx.pipeline().channel().attr(Constants.attributeKey).get();
-        cliantChannel.writeAndFlush(msg);
+        Channel clientChannel = ctx.pipeline().channel().attr(Constants.attributeKey).get();
+        clientChannel.writeAndFlush(msg);
     }
 
 

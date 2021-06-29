@@ -14,13 +14,17 @@ public class Bootstrap {
         List<RedisServerConfig> redisServerConfigList = ConfigUtil.config.getRedisServerConfigList();
         List<Server> serverList = new ArrayList<>();
         for (RedisServerConfig redisServerConfig : redisServerConfigList) {
-            Server aServer = new Server(redisServerConfig.getIp(),redisServerConfig.getPort());
+            Server aServer = new Server(redisServerConfig.getIp(), redisServerConfig.getPort());
             serverList.add(aServer);
-            aServer.start();
+            Integer serverChannel = ConfigUtil.config.getServerChannel();
+            for (int i = 0; i < serverChannel; i++) {
+                aServer.start();
+            }
+
         }
 
         // 启动client，连接netty-server，和redis-cli
-        Client client = new Client(ConfigUtil.config.getClientPort(),serverList);
+        Client client = new Client(ConfigUtil.config.getClientPort(), serverList);
         client.start();
     }
 }
