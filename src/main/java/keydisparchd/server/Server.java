@@ -61,5 +61,25 @@ public class Server {
         return serverChannel.get(idx);
     }
 
+    public void closeChannel(){
+        try {
+            if(serverChannel != null && serverChannel.size()>0){
+                for (Channel channel : serverChannel) {
+                    channel.close().addListener(new GenericFutureListener<Future<? super Void>>() {
+                        @Override
+                        public void operationComplete(Future<? super Void> future) throws Exception {
+                            System.out.println("channel shutdown");
+                        }
+                    });
+                }
+            }
+        }catch (Exception e){
+
+        }finally {
+
+        }
+
+    }
+
 
 }

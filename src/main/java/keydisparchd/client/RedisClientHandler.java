@@ -55,6 +55,11 @@ public class RedisClientHandler extends ChannelDuplexHandler {
             serverIdx = key.hashCode() % serverCount;
             server = serverList.get(serverIdx);
         }
+        // 兜底
+        if (server == null) {
+            serverIdx = new Random().nextInt(serverCount);
+            server = serverList.get(serverIdx);
+        }
 
         System.out.println("serverIdx = " + serverIdx);
 

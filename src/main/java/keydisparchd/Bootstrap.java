@@ -26,5 +26,15 @@ public class Bootstrap {
         // 启动client，连接netty-server，和redis-cli
         Client client = new Client(ConfigUtil.config.getClientPort(), serverList);
         client.start();
+
+        System.out.println("bb");
+        // 添加hook
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("aaaaa");
+            for (Server server : serverList) {
+                server.closeChannel();
+            }
+        }));
+
     }
 }
